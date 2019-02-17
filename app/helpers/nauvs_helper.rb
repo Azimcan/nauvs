@@ -1,0 +1,2 @@
+module NauvsHelper
+end

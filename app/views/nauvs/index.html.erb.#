@@ -1,0 +1,75 @@
+<% html_title "Nauvs" %>
+
+<h2>Nauvs</h2>
+
+<% @issues.each do |issue| %>
+  <% toplam = 0 %>
+	<% @time_entries.each do |entry| %>
+		<% if entry.project_id == issue.project_id && entry.issue_id == issue.id %>
+			<% toplam += entry.hours %>
+		<% end %>
+	<% end %>
+	<table class="table">
+		<thead>
+	 		<tr>
+	 			<th>Issue <%= issue.id %></th>
+	 	  	<th>Status</th>
+	 	   	<th>Assignee</th>
+		    <th>Start date</th>
+		    <th>Due date</th>
+		    <th>Done date</th>
+		    <th>Spend Time</th>
+		  </tr>
+		</thead>
+	  <tbody>
+		  <tr>
+		  	<td></td>
+		    <td><%= issue.status.name %></td>
+		    <td><%= issue.assigned_to.firstname %> <%= issue.assigned_to.lastname %></td>
+		    <td><%= issue.start_date %></td>
+		    <td><%= issue.due_date %></td>
+		    <td>%<%= issue.done_ratio %></td>
+		    <td><%= toplam %> Hours</td>
+		  </tr>
+		  <% if false %>
+			  <tr>
+			  	<td></td>
+			    <td><%= issue.status.name %></td>
+			    <td><%= issue.assigned_to.firstname %> <%= issue.assigned_to.lastname %></td>
+			    <td><%= issue.start_date %></td>
+			    <td><%= issue.due_date %></td>
+			    <td>%<%= issue.done_ratio %></td>
+			    <td><%= toplam %> Hours</td>
+			  </tr>
+			 <% end -%>
+		</tbody>
+	</table>
+	<hr>
+<% end -%>
+
+<style>
+	table {
+	  font-family: arial, sans-serif;
+	  border-collapse: collapse;
+	  width: 100%;
+	}
+
+	td, th {
+	  border: 1px solid #dddddd;
+	  text-align: left;
+	  padding: 8px;
+	  width: 10%;
+	}
+
+	tr:nth-child(even) {
+	  background-color: #dddddd;
+	}
+	hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #A40000;
+    margin: 1em 0;
+    padding: 0; 
+	}
+</style>

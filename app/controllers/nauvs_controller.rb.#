@@ -1,0 +1,57 @@
+class NauvsController < ApplicationController
+	before_action :find_project, :authorize, only: :index
+	before_action :find_issues, :authorize, only: :index
+	before_action :find_issues_journals, :authorize, only: :index
+	
+	def index
+		
+		@time_entries = TimeEntry.all
+	end 
+
+	private
+
+	def create_nauvsInfo
+		
+		NauvsInfo.create(
+			issue_id: nil, 
+			status: nil, 
+			status_spend_time: nil, 
+			changed_user: nil, 
+			issue_category: nil
+		)
+
+
+		puts "++++++++++++"
+		@issues_journals.each do |issue_journal|
+			puts "=================================="
+			puts issue_journal.journalized_id
+			puts issue_journal.journalized_type
+			puts issue_journal.user_id
+			puts issue_journal.notes
+			puts issue_journal.created_on
+			puts issue_journal.private_notes
+			puts "-----------------------------------"
+			puts issue_journal.details.first.journal_id
+			puts issue_journal.details.first.property
+			puts issue_journal.details.first.prop_key
+			puts issue_journal.details.first.old_value
+			puts issue_journal.details.first.value
+			puts "==================================="
+		end
+	end
+
+	def find_project
+		@project = Project.find(params[:id])
+	end
+
+	def find_issues
+		@issues = @project.issues
+	end
+
+	def find_issues_journals
+		@issues_journals = []
+		@issues.each do |issue|
+			@issues_journals += Journal.where(journalized_id: issue.id)
+		end
+	end
+end
