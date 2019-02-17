@@ -1,3 +1,3 @@
-## Nauvs
+# Nauvs
 
-# Issue detail plugin for Redmine
+### Issue detail plugin for Redmine
